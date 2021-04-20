@@ -86,6 +86,7 @@ class RoomManager extends ManagerTableAbstract implements ManagerTableInterface 
 
     public function archivedRoom(int $idRoom): boolean {
 
+        
 
     }
 
