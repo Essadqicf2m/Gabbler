@@ -48,10 +48,10 @@ class RoomManager extends ManagerTableAbstract implements ManagerTableInterface 
 
         try {
             $goAddRoom->execute([
-                $input ->getPublicRoom(),
-                $input ->getArchivedRoom(),
-                $input ->getNameRoom(),
-                $input ->getLastActivityRoom(),
+                $input->getPublicRoom(),
+                $input->getArchivedRoom(),
+                $input->getNameRoom(),
+                $input->getLastActivityRoom(),
             ]);
             return true;
         } catch (Exception $error) {
@@ -60,25 +60,42 @@ class RoomManager extends ManagerTableAbstract implements ManagerTableInterface 
         }  
     }
 
-    public function updateRoom(Room $input): boolean {
-        //Room ==> to use Category Class:
-        //$input ==> will hold getters results:
-        //Done to add a bunch of rooms, can be modified to fit a specific need!!
+    public function updateRoom(int $idRoom, Room $input): boolean {
 
-        $addRoom = "INSERT INTO room (public_room, archived_room, name_room, last_activity_room) VALUES (?,?,?,?)";
-        $goAddRoom = $this->db->prepare($addRoom);
+        $updateRoom = "UPDATE room SET not getting it = ? WHERE not getting it = ?";
+        $goUpdateRoom = $this->db->prepare($updateRoom);
 
-        try {
-            $goAddRoom->execute([
-                $input ->getPublicRoom(),
-                $input ->getArchivedRoom(),
-                $input ->getNameRoom(),
-                $input ->getLastActivityRoom(),
-            ]);
-            return true;
-        } catch (Exception $error) {
-            trigger_error($error->getMessage());
-            return false;
-        }  
+        $goUpdateRoom->bindValue(2,$input->getPublicRoom(),PDO::PARAM_STR);
+        $goUpdateRoom->bindValue(3,$input->getArchivedRoom(),PDO::PARAM_INT);  
+        $goUpdateRoom->bindValue(4,$input->getNameRoom(),PDO::PARAM_STR);
+        $goUpdateRoom->bindValue(5,$input->getLastActivityRoom(),PDO::PARAM_INT);   
+        return $goUpdateRoom->execute();   
+
+    }
+
+    public function updateActivityRoom(int $idRoom): boolean {
+
+        $updateActivityRoom = "UPDATE room SET last_activity_room = ? WHERE id_room = ?";
+        $goUpdateActivityRoom = $this->db->prepare($updateActivityRoom);
+
+        $goUpdateActivityRoom->bindValue($input->getLastActivityRoom(),PDO::PARAM_STR);
+        $goUpdateActivityRoom->bindValue($input->getIdRoom(),PDO::PARAM_STR);
+        return $goUpdateActivityRoom->execute();
+
+    }
+
+    public function archivedRoom(int $idRoom): boolean {
+
+
+    }
+
+    public function deadRoom(int $idRoom, int $time): boolean {
+
+
+    }
+
+    public function nameGenerateRoom(int $idRoom, Room $input): string {
+
+
     }
 }
