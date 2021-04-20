@@ -17,6 +17,27 @@ class RoomManager extends ManagerTableAbstract implements ManagerTableInterface 
         return [];
     }
 
+    public function viewRoomById(int $idRoom): array {
+
+        $viewRoomFetch = "SELECT * FROM room WHERE  id_room = ?";
+        $viewRoomGoFetch = $this->db->prepare($viewRoomFetch); 
+
+        try{
+
+            $viewRoomGoFetch->execute([$idRoom]);
+            if($viewRoomGoFetch->rowCount()){
+                return $viewRoomGoFetch->fetchAll(PDO::FETCH_ASSOC);
+            }else{
+                return [];
+            }
+
+        }
+
+        catch(Exception $error){
+            trigger_error($error->getMessage());   
+        }
+    } 
+
     public function newRoom(Room $input): boolean {
         //Room ==> to use Category Class:
         //$input ==> will hold getters results:
