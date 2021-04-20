@@ -79,7 +79,7 @@ class RoomManager extends ManagerTableAbstract implements ManagerTableInterface 
         $goUpdateActivityRoom = $this->db->prepare($updateActivityRoom);
 
         $goUpdateActivityRoom->bindValue($input->getLastActivityRoom(),PDO::PARAM_STR);
-        $goUpdateActivityRoom->bindValue($input->getIdRoom(),PDO::PARAM_STR);
+        $goUpdateActivityRoom->bindValue($input->getIdRoom(),PDO::PARAM_INT);
         return $goUpdateActivityRoom->execute();
 
     }
