@@ -3,6 +3,20 @@
 class CategoryManager extends ManagerTableAbstract implements ManagerTableInterface {
 //A bit convoluted as I see it so I started with a selection of all entries based on my category mapping:
 //I do not know if $sql, $query and $prepare are the conventional agreed upon!!
+
+
+    public function selectAll(): array{
+
+        $sql = "SELECT * FROM category;";
+        $query = $this->db->query($sql);
+
+        if ($query->rowCount()) {
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return [];
+    }
+
     public function getAllCategory(): array {
     
         $categoryFetch = "SELECT * FROM category;";
