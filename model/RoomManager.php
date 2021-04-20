@@ -17,4 +17,25 @@ class RoomManager extends ManagerTableAbstract implements ManagerTableInterface 
         return [];
     }
 
+    public function newRoom(Room $input): boolean {
+        //Room ==> to use Category Class:
+        //$input ==> will hold getters results:
+        //Done to add a bunch of rooms, can be modified to fit a specific need!!
+
+        $addRoom = "INSERT INTO room (public_room, archived_room, name_room, last_activity_room) VALUES (?,?,?,?)";
+        $goAddRoom = $this->db->prepare($addRoom);
+
+        try {
+            $goAddRoom->execute([
+                $input ->getPublicRoom(),
+                $input ->getArchivedRoom(),
+                $input ->getNameRoom(),
+                $input ->getLastActivityRoom(),
+            ]);
+            return true;
+        } catch (Exception $error) {
+            trigger_error($error->getMessage());
+            return false;
+        }  
+    }
 }
